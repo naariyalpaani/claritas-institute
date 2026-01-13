@@ -76,17 +76,31 @@
     <div id="cursor-outline"></div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 flex justify-between items-center px-10 md:px-20 py-10">
-        <div class="flex items-center gap-3 font-black text-2xl tracking-tighter hover-target">
-            <img src="logo.png" alt="Logo" class="w-8 h-8">
+   <!-- Updated Navigation -->
+    <nav class="fixed w-full z-50 flex justify-between items-center px-8 md:px-20 py-8 bg-[#050505]/80 backdrop-blur-md">
+        <a href="index.html" class="flex items-center gap-3 font-black text-xl md:text-2xl tracking-tighter">
+            <img src="logo.png" alt="Logo" class="w-6 h-6 md:w-8 md:h-8">
             CLARITAS
-        </div>
+        </a>
+        
+        <!-- Mobile Menu Button (Only shows on phones) -->
+        <button id="menu-btn" class="md:hidden text-white"><i data-lucide="menu"></i></button>
+
+        <!-- Desktop Links (Hidden on phones) -->
         <div class="hidden md:flex gap-12">
             <a href="about.html" class="nav-link">About</a>
             <a href="methodology.html" class="nav-link">Methodology</a>
             <a href="courses.html" class="nav-link">Courses</a>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#050505] z-[60] flex flex-col items-center justify-center gap-10 opacity-0 pointer-events-none transition-all duration-500">
+        <button id="menu-close" class="absolute top-10 right-10 text-white"><i data-lucide="x" class="w-10 h-10"></i></button>
+        <a href="about.html" class="text-3xl font-black tracking-tighter">About</a>
+        <a href="methodology.html" class="text-3xl font-black tracking-tighter">Methodology</a>
+        <a href="courses.html" class="text-3xl font-black tracking-tighter text-purple-500">Courses</a>
+    </div>
 
     <!-- Hero Section -->
     <section class="min-h-screen flex flex-col md:flex-row items-center px-10 md:px-20 pt-40 gap-16 relative">
@@ -195,6 +209,25 @@
             scrollTrigger: { trigger: "#brief", start: "top 80%" },
             y: 40, opacity: 0, duration: 1.5, ease: "expo.out"
         });
+        // 1. Fix the "Stuck Cursor" on phones
+        if ('ontouchstart' in window) {
+            document.getElementById('cursor-outline').style.display = 'none';
+            document.body.style.cursor = 'auto';
+        }
+
+        // 2. Mobile Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+        });
+
+        menuClose.addEventListener('click', () => {
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        });
     </script>
 </body>
+    
 </html>
